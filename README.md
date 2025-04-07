@@ -1,50 +1,46 @@
-# Welcome to your Expo app 👋
+# MRE: expo/fetch Requires Body for POST Requests on Android
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an [Expo](https://expo.dev) project demonstrating a bug where `fetch` from `expo/fetch` fails on Android when making a `POST` request without a `body`, deviating from the Fetch Standard.
 
-## Get started
+See the related bug report: [Link to Bug Report] (Replace this with the actual link if available)
 
-1. Install dependencies
+## Bug Description
 
-   ```bash
-   npm install
-   ```
+- **Package:** `expo` (specifically `expo/fetch`)
+- **Platforms:** Affects Android (iOS/Web work as expected)
+- **Summary:** Making a `POST` request using `expo/fetch` *without* providing a `body` in the options fails on Android with a native Java exception. The Fetch Standard allows body-less POST requests.
 
-2. Start the app
+## How to Reproduce
 
-   ```bash
+1.  **Install dependencies**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+2.  **Start the app**
+
+    ```bash
     npx expo start
-   ```
+    ```
 
-In the output, you'll find options to open the app in a
+3.  **Run on Android**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+    - Open the app on an Android emulator or physical device using the options provided by `npx expo start` (e.g., press `a` in the terminal).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+4.  **Test the Fetch Request**
 
-## Get a fresh project
+    - The app consists of a single screen with a button labeled "Send POST Request (No Body)".
+    - Tap the button.
 
-When you're ready, run:
+## Expected Behavior
 
-```bash
-npm run reset-project
-```
+The `fetch` call to `https://httpbin.org/post` should succeed (Status 200), and a "Success!" message should appear on the screen, as it does on iOS and Web.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Observed Behavior (on Android)
 
-## Learn more
+The `fetch` call fails, and an "Error:" message appears on the screen, displaying the details of the native exception caught.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This demonstrates the platform inconsistency and deviation from the Fetch Standard when using `expo/fetch` on Android for body-less POST requests.
