@@ -2,13 +2,9 @@
 
 This is an [Expo](https://expo.dev) project demonstrating a bug where `fetch` from `expo/fetch` fails on Android when making a `POST` request without a `body`, deviating from the Fetch Standard.
 
-See the related bug report: [Link to Bug Report] (Replace this with the actual link if available)
-
-## Bug Description
-
 - **Package:** `expo` (specifically `expo/fetch`)
 - **Platforms:** Affects Android (iOS/Web work as expected)
-- **Summary:** Making a `POST` request using `expo/fetch` *without* providing a `body` in the options fails on Android with a native Java exception. The Fetch Standard allows body-less POST requests.
+- **Summary:** Making a `POST` request using `expo/fetch` *without* providing a `body` in the options fails on Android with a native Java exception. The [Fetch Standard](https://fetch.spec.whatwg.org/#requestinit) allows body-less requests as the `body` property in the `RequestInit` dictionary is optional (`(BodyInit or null)? body = null;`).
 
 ## How to Reproduce
 
